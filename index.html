@@ -2,6 +2,91 @@
 
 <html>
  
+ <!-- //////////////////////////////////////////////////////////////////////////////// -->
+  <!-- ////////////////////////////// Word count function ////////////////////////////// -->
+  <!-- //////////////////////////////////////////////////////////////////////////////// -->
+<!-- Placeholder for total word count -->
+<p id="totalWordCount"></p>
+<hr>
+<script>
+  // Function to calculate and display word count for a specified section
+  function displayWordCount(sectionId, outputId) {
+    // Get the text content from the specified section
+    const text = document.getElementById(sectionId).textContent;
+    // Split text into words based on spaces and filter out any empty strings
+    const wordArray = text.trim().split(/\s+/);
+    // Count the words
+    const wordCount = wordArray.length;
+    // Return the word count for summing purposes
+    return wordCount;
+  }
+  // Function to calculate and display total word count from selected sections
+  function displayTotalWordCount() {
+    // Calculate word count for each section and accumulate the total
+    const IntroductionCount = displayWordCount("Introduction_InText");
+    const GenAICount = displayWordCount("GenAI_InText");
+    const OpportunitiesCount = displayWordCount("Opportunities_InText");
+    const ChallengesCount = displayWordCount("Challenges_InText");
+    const FutureCount = displayWordCount("Future_InText");
+    const ConclusionCount = displayWordCount("Conclusion_InText");
+    // Calculate the sum of all selected sections
+    const totalWordCount = IntroductionCount + GenAICount + OpportunitiesCount + ChallengesCount + FutureCount + ConclusionCount;
+    // Display the total word count
+    document.getElementById("totalWordCount").innerText = `Total word count: ${totalWordCount}`;
+  }
+  // Run the function for specific sections and display total count when the page loads
+  window.onload = displayTotalWordCount;
+</script>
+
+<!-- //////////////////////////////////////////////////////////////////////////////// -->
+  <!-- ////////////////////////////// Adding last update ////////////////////////////// -->
+  <!-- //////////////////////////////////////////////////////////////////////////////// -->
+    <!-- Last commit time display -->
+    <div id="last-updated">Loading last update time...</div>
+    <!-- Verify Button -->
+    <button onclick="verifyLastUpdatedTime()" style="display: block; margin: 10px auto; padding: 8px 16px;">
+        Verify Last Modified Time
+    </button>
+    <script>
+        async function getLastUpdatedTime() {
+            const username = 'FEPSFY6851518';
+            const repo = 'FY6851518';
+           
+            const url = `https://api.github.com/repos/${username}/${repo}/commits`;
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/vnd.github.v3+json',
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error(`Error fetching data: ${response.status} - ${response.statusText}`);
+                }
+                const commits = await response.json();
+                if (commits && commits.length > 0) {
+                    const lastCommitDate = new Date(commits[0].commit.committer.date);
+                   
+                    // Displaying the time on load
+                    document.getElementById('last-updated').innerText = `Last Modified Time: ${lastCommitDate.toLocaleString()}`;
+                } else {
+                    document.getElementById('last-updated').innerText = 'No commits found in the repository.';
+                }
+            } catch (error) {
+                console.error('Error fetching the last updated time:', error);
+                document.getElementById('last-updated').innerText = 'Error fetching update time. Please check the repository details.';
+            }
+        }
+        // Function to verify the last update time by re-fetching it from the API
+        async function verifyLastUpdatedTime() {
+            document.getElementById('last-updated').innerText = 'Verifying...';
+            await getLastUpdatedTime();
+            alert("Last modified time has been successfully verified from GitHub API.");
+        }
+        // Initial load to display the time on page load
+        window.onload = getLastUpdatedTime;
+    </script>
+
 <head>
    <head>
    <img src="WebBanner.png" alt="Banner" width="1200" height="300">
@@ -42,7 +127,7 @@
          <td><a href="#Abstract">Abstract</td>
          </tr>
         <tr>
-          <td><a href="Introduction">Introduction</td>
+          <td><a href="#Introduction">Introduction</td>
         </tr>
         <tr>
           <td><a href="#Generative AI: An Overview">Generative AI: An Overview</td>
@@ -102,20 +187,42 @@
       .myslides {display:none}
     </style>
     <hr>
-     <h3 id="Generative AI: An Overview" style="text-align: center;">Generative AI: An Overview</h3>
+     <h3 id="Introduction" style="text-align: center;">Introduction</h3>
        <p class="ex2">
-          <pre>
-            To clarify further, generative AI is a subset of AI that uses generative models to produce text, images, videos, and other forms of data. They learn patterns from training data and then use said patterns 
-            to produce new data <a  href="https://doi-org.surrey.idm.oclc.org/10.4324/9781003459026">(Ka and Colloton, 2024)</a>. This simulates human learning as the AI can use the patterns it has seen in training data in other situations with a similar context. Generative AI saw a boom 
-            in the early 2020s, the most notorious example of which being ChatGPT and it’s GPT-4 model developed by OpenAI. The function of ChatGPT is no longer limited to just being a chatbot, and the power of it’s GPT-4 
-            model means that it is now capable of far more than just conversation, now being able to do things such as compose music, generate and debug code, and even emulate a Linux operating system. This just goes to 
-            show the massive progress AI has made in the 2020s and helps strengthen the case for the implementation of AI into the daily life. Due to the easy access to services such as ChatGPT, AI is inevitably being 
-            used in education already, although it is not regulated, primarily being used by students themselves for better or worse.
+          <pre id = "Introduction_InText">
+            Artificial Intelligence defined broadly is a sector within computer science that focuses on simulating human intelligence with machines. This means giving machines the capabilities to learn and act 
+            differently based on their surroundings. A subset of this is generative AI, the subject of this article, which is specifically used to produce data such as text, images or videos. The rapid improvement of 
+            generative over the last few years has led to serious discussions being held regarding how it can be utilised in various sectors as well as in everyday life. A big sector raised is education, with some arguing 
+            that it could revolutionise modern education. This article will explore the dual nature of the implementation of generative AI in education by analysing the views of various academics and their stances on both 
+            it’s incredibly promising potential for personalised learning, and contrastingly the challenges that come with its implementation such as academic integrity and ethical issues.
         </pre>
     </p>
 
+    <style>
+     p.ex3 {
+        margin-left: 50px;
+    }  
+    </style>
+    </head>
+    
+        <style>
+        .myslides {display:none}
+        </style>
+    <hr>
+     <h3 id="Generative AI: An Overview" style="text-align: center;">Generative AI: An Overview</h3>
+          <p class="ex3">
+            <pre id = "GenAI_InText">
+             To clarify further, generative AI is a subset of AI that uses generative models to produce text, images, videos, and other forms of data. They learn patterns from training data and then use said patterns 
+             to produce new data <a  href="https://doi-org.surrey.idm.oclc.org/10.4324/9781003459026">(Ka and Colloton, 2024)</a>. This simulates human learning as the AI can use the patterns it has seen in training data in other situations with a similar context. Generative AI saw a boom 
+             in the early 2020s, the most notorious example of which being ChatGPT and it’s GPT-4 model developed by OpenAI. The function of ChatGPT is no longer limited to just being a chatbot, and the power of it’s GPT-4 
+             model means that it is now capable of far more than just conversation, now being able to do things such as compose music, generate and debug code, and even emulate a Linux operating system. This just goes to 
+             show the massive progress AI has made in the 2020s and helps strengthen the case for the implementation of AI into the daily life. Due to the easy access to services such as ChatGPT, AI is inevitably being 
+             used in education already, although it is not regulated, primarily being used by students themselves for better or worse.
+            </pre>
+        </p>
+
    <style>
-    p.ex3 {
+    p.ex4 {
       margin-left: 50px;
     }  
     </style>
@@ -125,8 +232,8 @@
     </style>
     <hr>
      <h3 id="Opportunities in Education" style="text-align: center;">Opportunities in Education</h3>
-       <p class="ex3">
-          <pre>
+       <p class="ex4">
+          <pre id = "Opportunities_InText">
             One of the implementations of this technology with the most potential to revolutionise is the use of generative AI to personalise learning for students. Tools like ChatGPT can provide adaptive learning 
             experiences to an individual student in ways that a teacher just can’t. A student will never have the luxury of being the only student a teacher needs to account for, therefore currently individual feedback 
             on work and steps to improve are quite rare, as it is just not achievable for a single teacher to provide this type of feedback to a class regularly. This feedback becomes even rarer as students reach higher 
@@ -146,7 +253,7 @@
      </p>
 
  <style>
-   p.ex4 {
+   p.ex5 {
       margin-left: 50px;
     }  
     </style>
@@ -156,8 +263,8 @@
     </style>
     <hr>
      <h3 id="Challenges and Ethical Considerations" style="text-align: center;">Challenges and Ethical Considerations</h3>
-        <p class="ex4">
-          <pre>
+        <p class="ex5">
+          <pre id = "Challenges_InText">
             Despite the clear benefits AI could clearly have in education, there are many issues that make it challenging to implement currently. One of the largest challenges is the privacy concerns that arise as well 
             as the need for transparency. To provide a personalised experience, the generative AI system would require large amounts of personal data, which if not managed properly could end up compromising student privacy 
             <a  href="https://doi.org/10.1080/0144929x.2024.2394886">(Michail Giannakos et al., 2024)</a>. The AI must be trained on this personal data, which also raises another concern of a lack of transparency on what data is being used. There would also have to be some level of 
@@ -167,25 +274,6 @@
   </p>    
  
   <style>
-    p.ex5 {
-       margin-left: 50px;
-     }  
-     </style>
-      </head>
-          <style>
-       .myslides {display:none}
-     </style>
-     <hr>
-      <h3 id="Future Directions" style="text-align: center;">Future Directions</h3>
-         <p class="ex5">
-           <pre>
-            Jussi S. Jauhiainen and Agustín Garagorry Guerra, academics at the University of Turku argue that before any attempts to integrate generative AI into education are made, the models intended for use should first 
-            be extensively tailored for this specific implementation. There are still some inconsistencies in things like grade profiles provided by AI which would first need to be solved <a  href="https://doi.org/10.1080/14703297.2024.2422337">(Jauhiainen and Garagorry Guerra, 2024)</a>. 
-            This is a valid approach and a logical next step. Whilst it’s important to work on the ethical issues, solving those is pointless if the AI is not suitable for implementation.
-           </pre>
-   </p>    
-
-   <style>
     p.ex6 {
        margin-left: 50px;
      }  
@@ -195,16 +283,35 @@
        .myslides {display:none}
      </style>
      <hr>
-      <h3 id="Conclusion" style="text-align: center;">Conclusion</h3>
+      <h3 id="Future Directions" style="text-align: center;">Future Directions</h3>
          <p class="ex6">
-           <pre>
+           <pre id = "Future_InText">
+            Jussi S. Jauhiainen and Agustín Garagorry Guerra, academics at the University of Turku argue that before any attempts to integrate generative AI into education are made, the models intended for use should first 
+            be extensively tailored for this specific implementation. There are still some inconsistencies in things like grade profiles provided by AI which would first need to be solved <a  href="https://doi.org/10.1080/14703297.2024.2422337">(Jauhiainen and Garagorry Guerra, 2024)</a>. 
+            This is a valid approach and a logical next step. Whilst it’s important to work on the ethical issues, solving those is pointless if the AI is not suitable for implementation.
+           </pre>
+   </p>    
+
+   <style>
+    p.ex7 {
+       margin-left: 50px;
+     }  
+     </style>
+      </head>
+          <style>
+       .myslides {display:none}
+     </style>
+     <hr>
+      <h3 id="Conclusion" style="text-align: center;">Conclusion</h3>
+         <p class="ex7">
+           <pre id = "Conclusion_InText">
             To conclude, despite there being clear advantages to implementing AI into education, it is still too early to do so due to the ethical issues and current suitability of the models. However, with sufficient 
             problems to these issues AI could prove to be a revolutionary force in the education sector.
            </pre>
    </p>    
 
   <style>
-    p.ex7 {
+    p.ex8 {
       margin-left: 50px;
     }  
     </style>
@@ -214,7 +321,7 @@
     </style>
     <hr>
      <h3 id="Reference List" style="text-align: center;">Reference List</h3>
-    <p class="ex7">
+    <p class="ex8">
     <pre>  
         Su, J. and Yang, W. (2023). Unlocking the power of ChatGPT: A framework for applying generative AI in Education. ECNU Review of Education, 6(3), pp.355–366. doi:<a  href="https://doi.org/10.1177/20965311231168423">https://doi.org/10.1177/20965311231168423</a>.
         
